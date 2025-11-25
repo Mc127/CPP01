@@ -1,11 +1,11 @@
 CXX = c++
 CXXFCLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRCS = main.cpp  Makefile  Zombie.cpp  zombieHorde.cpp  Zombie.hpp\
+SRCS = main.cpp Zombie.cpp  zombieHorde.cpp\
 
 OBJS = $(SRCS:.cpp=.o)
 
-NAME = zombie
+NAME = zombiehorde
 
 all : $(NAME)
 
