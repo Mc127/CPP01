@@ -1,12 +1,6 @@
 #include "Zombie.hpp"
 #include "Zombie.h"
 
-void destroy(Zombie *z)
-{
-    std::cout <<  z->getName() << " was destroyed ....\n";
-    delete z;
-}
-
 int main()
 {
     Zombie *z;
@@ -16,7 +10,6 @@ int main()
         return (1);
     z->announce();
     randomChump("hamza");
-    destroy(z);
-
+    delete z;
     return (0);
 }
