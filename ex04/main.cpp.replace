@@ -1,7 +1,6 @@
 
 #include <iostream>
 #include <fstream>
-#include <sstream>
 
 int main(int ac, char *av[])
 {
@@ -20,18 +19,13 @@ int main(int ac, char *av[])
 	S1 = av[2];
 	S2 = av[3];
 
-	if (S1 == "" || S2 == "")
-	{
-		std::cerr << "Error S1 or S2 is an emty string\n";
-		return 1;
-	}
-
 	std::ifstream file(fileName.c_str());
 	if (!file.is_open())
 	{
 		std::cerr << "Error accuring while oppening the file\n";
 		return (1);
 	}
+
 	newfile = fileName + ".replace";
 
 	std::ofstream filereplace(newfile.c_str());
@@ -40,21 +34,32 @@ int main(int ac, char *av[])
 		std::cerr << "Error accuring while oppening the filereplace\n";
 		return (1);
 	}
-
-	std::stringstream buff;
-	buff << file.rdbuf();
-	line = buff.str();
-
-	size_t pos;
-	while ((pos = line.find(S1)) != std::string::npos)
+	size_t s_lingh = S1.length();
+	ssize_t hhhh;
+	ssize_t idx = 0;
+	while (std::getline(file, line))
 	{
-		line.erase(pos, S1.length());
-		line.insert(pos, S2);
-		pos += S2.length();
+		hhhh = 0;
+		while (hhhh != -1)
+		{
+			hhhh = line.find(S1, hhhh);
+			if (hhhh != -1)
+			{
+				line.erase(hhhh, s_lingh);
+				line.insert(hhhh, S2);
+				hhhh += S2.length();
+			}
+		}
+		idx++;
+		if (idx > 1)
+			filereplace << "\n";
+		filereplace << line;
 	}
-	filereplace << line;
-	file.close();
-	filereplace.close();
+	if (line == "")
+		filereplace << "\n";
 	return 0;
+	// close files ?????
+	// check for emty args
+	
 }
 
